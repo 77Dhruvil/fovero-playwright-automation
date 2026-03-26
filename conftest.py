@@ -1,8 +1,18 @@
 import pytest
+from pages.login_page import LoginPage
+from pages.dashboard_page import DashboardPage
+from utils.config import Config
+
 
 @pytest.fixture
-def page(browser):
-    context = browser.new_context()
-    page = context.new_page()
-    yield page
-    context.close()
+def admin_dashboard(page):   # ✅ NO self, NO class
+
+    print("🔥 admin_dashboard fixture running")
+
+    login = LoginPage(page)
+    login.load()
+
+    user = Config.USERS["administrator"]
+    login.login(user["email"], user["password"])
+
+    return DashboardPage(page)
