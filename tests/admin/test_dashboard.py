@@ -1,45 +1,34 @@
-import pytest
+def test_birthday_section(admin_dashboard_login):
+    dashboard = admin_dashboard_login
 
+    dashboard.get_Todaybirthday_tab()
 
-@pytest.mark.admin
-def test_admin_dashboard_complete_flow(admin_dashboard):
+    # Case 1: No Data
+    if dashboard.is_no_data_found():
+        print("✅ No Data Found")
+        return
 
-    dashboard = admin_dashboard
+    # Get count
+    count = dashboard.get_employee_count()
+    print(f"Employee Count: {count}")
 
-    # ✅ Graph validation
-#    assert dashboard.is_graph_visible()
+    # Case 2: Single
+    if count == 1:
+        print("✅ Single Birthday - No navigation")
+        return
 
-  #  dashboard.open_graph_filter()
-    # dashboard.select_this_fiscal()
-    #
-    # dashboard.open_graph_filter()
-    # dashboard.select_previous_fiscal()
-    #
-    # # Click graph bars
-    # for _ in range(2):
-    #     dashboard.click_graph_bar()
-    #     dashboard.close_graph_popup()
+    # Case 3: Two users (IMPORTANT FIX)
+    if count == 2:
+        print("✅ Two Birthdays - Still no navigation")
 
-    # ✅ Birthday
-    dashboard.open_upcoming_birthday()
+        # Ensure buttons NOT visible
+        assert not dashboard.click_next_button(), "❌ Next should not be visible"
+        assert not dashboard.click_previous_button(), "❌ Prev should not be visible"
+        return
 
-    # ✅ Live Attendance
-    dashboard.open_live_attendance()
+    # Case 4: More than 2 users
+    if count > 2:
+        print("✅ Multiple Birthdays (>2)")
 
-    # ✅ Leaves & WFH
-    dashboard.open_upcoming_leaves()
-    dashboard.open_upcoming_wfh()
-
-    # ✅ Productivity Tabs
-    dashboard.open_departures()
-    dashboard.open_breaks()
-    dashboard.open_productivity()
-
-    # ✅ Announcement
-    dashboard.click_add_announcement()
-
-    # ✅ Apply Leave
-    dashboard.click_apply_leave()
-
-    # Back to dashboard
-    dashboard.go_to_dashboard()
+        assert dashboard.click_next_button(), "❌ Next button not visible"
+        assert dashboard.click_previous_button(), "❌ Previous button not visible"

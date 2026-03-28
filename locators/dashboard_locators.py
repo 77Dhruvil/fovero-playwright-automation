@@ -1,50 +1,18 @@
 class DashboardLocators:
 
-    # -------------------------------
-    # GRAPH SECTION
-    # -------------------------------
-    GRAPH_TITLE = "text=Last 12 Months"
-    GRAPH_FILTER_BTN = "button:has-text('Last 12 Months')"
-    GRAPH_OPTION_THIS_FISCAL = "text=This Fiscal"
-    GRAPH_OPTION_PREVIOUS = "text=Previous Fiscal Year"
+    ##### Birthday Section ######################
 
-    GRAPH_BAR = "g > g > g:nth-child(2) > g > rect"
-    GRAPH_CLOSE_BTN = "button:has-text('Close')"
+    TODAYS_BIRTHDAY = '[id="Today\'s-Birthday"]'
 
-    # -------------------------------
-    # BIRTHDAY
-    # -------------------------------
-    UPCOMING_BIRTHDAY = "#Upcoming-Birthday"
+    # Scope this inside birthday section
+    BIRTHDAY_SECTION = "div.birthdayCard"
 
-    # -------------------------------
-    # LIVE ATTENDANCE
-    # -------------------------------
-    LIVE_ATTENDANCE = "text=LIVE Attendance"
+    # No Data
+    NO_DATA_FOUND = "img.noDataImg"
 
-    # -------------------------------
-    # LEAVE / WFH
-    # -------------------------------
-    UPCOMING_LEAVES = "#Upcoming-Leaves"
-    UPCOMING_WFH = "#Upcoming-WFH"
+    # Employee cards
+    EMPLOYEE_CARDS = ".slick-track > div:not(.slick-cloned)"
 
-    # -------------------------------
-    # PRODUCTIVITY
-    # -------------------------------
-    DEPARTURES_TAB = "text=Departures"
-    BREAKS_TAB = "text=Breaks"
-    PRODUCTIVITY_TAB = "text=Productivity"
-
-    # -------------------------------
-    # ANNOUNCEMENT
-    # -------------------------------
-    ADD_ANNOUNCEMENT_BTN = "#addAnnouncementButton"
-
-    # -------------------------------
-    # APPLY LEAVE
-    # -------------------------------
-    APPLY_LEAVE = "text=Apply Leave"
-
-    # -------------------------------
-    # NAVIGATION
-    # -------------------------------
-    DASHBOARD_LINK = "text=Dashboard"
+    # Navigation buttons
+    NEXT_BUTTON = ".slick-next"
+    PREVIOUS_BUTTON = ".slick-prev"

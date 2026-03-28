@@ -5,7 +5,7 @@ from utils.config import Config
 
 
 @pytest.fixture
-def admin_dashboard(page):   # ✅ NO self, NO class
+def admin_dashboard_login(page):   # ✅ NO self, NO class
 
     print("🔥 admin_dashboard fixture running")
 
@@ -14,5 +14,6 @@ def admin_dashboard(page):   # ✅ NO self, NO class
 
     user = Config.USERS["administrator"]
     login.login(user["email"], user["password"])
+
 
     return DashboardPage(page)
