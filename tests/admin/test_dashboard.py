@@ -1,34 +1,44 @@
 def test_birthday_section(admin_dashboard_login):
     dashboard = admin_dashboard_login
 
-    dashboard.get_Todaybirthday_tab()
+    # =========================
+    # 🔥 TODAY TAB
+    # =========================
+    print("\n--- Testing TODAY Birthday ---")
 
-    # Case 1: No Data
+    dashboard.click_birthday_tab("today")
+
     if dashboard.is_no_data_found():
-        print("✅ No Data Found")
-        return
+        print("✅ Today: No Data Found")
 
-    # Get count
-    count = dashboard.get_employee_count()
-    print(f"Employee Count: {count}")
+    else:
+        count = dashboard.get_employee_count()
+        print(f"Today Count: {count}")
 
-    # Case 2: Single
-    if count == 1:
-        print("✅ Single Birthday - No navigation")
-        return
+        if count <= 2:
+            assert not dashboard.click_next_button()
+            assert not dashboard.click_previous_button()
+        else:
+            assert dashboard.click_next_button()
+            assert dashboard.click_previous_button()
 
-    # Case 3: Two users (IMPORTANT FIX)
-    if count == 2:
-        print("✅ Two Birthdays - Still no navigation")
+    # =========================
+    # 🔥 UPCOMING TAB
+    # =========================
+    print("\n--- Testing UPCOMING Birthday ---")
 
-        # Ensure buttons NOT visible
-        assert not dashboard.click_next_button(), "❌ Next should not be visible"
-        assert not dashboard.click_previous_button(), "❌ Prev should not be visible"
-        return
+    dashboard.click_birthday_tab("upcoming")
 
-    # Case 4: More than 2 users
-    if count > 2:
-        print("✅ Multiple Birthdays (>2)")
+    if dashboard.is_no_data_found():
+        print("✅ Upcoming: No Data Found")
 
-        assert dashboard.click_next_button(), "❌ Next button not visible"
-        assert dashboard.click_previous_button(), "❌ Previous button not visible"
+    else:
+        count = dashboard.get_employee_count()
+        print(f"Upcoming Count: {count}")
+
+        if count <= 2:
+            assert not dashboard.click_next_button()
+            assert not dashboard.click_previous_button()
+        else:
+            assert dashboard.click_next_button()
+            assert dashboard.click_previous_button()

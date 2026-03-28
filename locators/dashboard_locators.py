@@ -2,9 +2,11 @@ class DashboardLocators:
 
     ##### Birthday Section ######################
 
+    # Tabs
     TODAYS_BIRTHDAY = '[id="Today\'s-Birthday"]'
+    UPCOMING_BIRTHDAY = '[id="Upcoming-Birthday"]'
 
-    # Scope this inside birthday section
+    # Section
     BIRTHDAY_SECTION = "div.birthdayCard"
 
     # No Data

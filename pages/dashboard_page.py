@@ -7,26 +7,33 @@ class DashboardPage(BasePage):
     def __init__(self, page):
         super().__init__(page)
 
-        # 🔥 Scope (VERY IMPORTANT)
         self.birthday_section = page.locator(DashboardLocators.BIRTHDAY_SECTION)
 
-    # 🔹 Click Today's tab
-    def get_Todaybirthday_tab(self):
-        self.page.locator(DashboardLocators.TODAYS_BIRTHDAY).click()
+    # 🔥 Generic tab click (REUSABLE)
+    def click_birthday_tab(self, tab_type="today"):
 
-    # 🔥 FIXED: Proper boolean check
+        if tab_type == "today":
+            self.page.locator(DashboardLocators.TODAYS_BIRTHDAY).click()
+
+        elif tab_type == "upcoming":
+            self.page.locator(DashboardLocators.UPCOMING_BIRTHDAY).click()
+
+        else:
+            raise ValueError("Invalid tab type")
+
+    # 🔥 No Data check
     def is_no_data_found(self):
         return self.birthday_section.locator(
             DashboardLocators.NO_DATA_FOUND
         ).first.is_visible()
 
-    # 🔥 Get employee count
+    # 🔥 Employee count
     def get_employee_count(self):
         return self.birthday_section.locator(
             DashboardLocators.EMPLOYEE_CARDS
         ).count()
 
-    # 🔥 Next button click (safe)
+    # 🔥 Next button
     def click_next_button(self):
         next_btn = self.birthday_section.locator(DashboardLocators.NEXT_BUTTON)
 
@@ -35,7 +42,7 @@ class DashboardPage(BasePage):
             return True
         return False
 
-    # 🔥 Previous button click (safe)
+    # 🔥 Previous button
     def click_previous_button(self):
         prev_btn = self.birthday_section.locator(DashboardLocators.PREVIOUS_BUTTON)
 
