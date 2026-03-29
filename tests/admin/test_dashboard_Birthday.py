@@ -42,3 +42,4 @@ def test_birthday_section(admin_dashboard_login):
         else:
             assert dashboard.click_next_button()
             assert dashboard.click_previous_button()
+
