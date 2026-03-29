@@ -1,7 +1,10 @@
+import allure
 import pytest
 
 
 @pytest.mark.admin
+@allure.title("Verify Leave Functionality")
+@allure.description("Admin should be able to see all the leaves of other users")
 def test_leaves_complete_validation(admin_dashboard_login):
 
     dashboard = admin_dashboard_login

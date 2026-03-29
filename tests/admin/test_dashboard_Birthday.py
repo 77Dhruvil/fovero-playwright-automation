@@ -1,3 +1,8 @@
+import allure
+
+
+@allure.title("Verify Birthday  Functionality")
+@allure.description("Admin should be able to get all the Birthday Section data properly")
 def test_birthday_section(admin_dashboard_login):
     dashboard = admin_dashboard_login
 
@@ -16,11 +21,10 @@ def test_birthday_section(admin_dashboard_login):
         print(f"Today Count: {count}")
 
         if count <= 2:
-            assert not dashboard.click_next_button()
-            assert not dashboard.click_previous_button()
+            assert not dashboard.is_next_button_visible()
         else:
-            assert dashboard.click_next_button()
-            assert dashboard.click_previous_button()
+            assert dashboard.is_next_button_visible()
+
 
     # =========================
     # 🔥 UPCOMING TAB

@@ -1,7 +1,10 @@
+import allure
 import pytest
 
 
 @pytest.mark.admin
+@allure.title("Verify WFH Functionality")
+@allure.description("Admin should be able to get the all the details of WFH users")
 def test_wfh_complete_validation(admin_dashboard_login):
 
     dashboard = admin_dashboard_login

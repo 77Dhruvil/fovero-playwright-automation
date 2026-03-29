@@ -7,6 +7,66 @@ class DashboardPage(BasePage):
     def __init__(self, page):
         super().__init__(page)
 
+        self.birthday_section = page.locator(DashboardLocators.BIRTHDAY_SECTION)
+
+        # 🔹 Click Today's tabc
+    def get_Todaybirthday_tab(self):
+                self.page.locator(DashboardLocators.TODAYS_BIRTHDAY).click()
+
+        # 🔥 Generic tab click (REUSABLE)
+    def click_birthday_tab(self, tab_type="today"):
+
+            # 🔥 FIXED: Proper boolean check
+            if tab_type == "today":
+                self.page.locator(DashboardLocators.TODAYS_BIRTHDAY).click()
+
+            elif tab_type == "upcoming":
+                self.page.locator(DashboardLocators.UPCOMING_BIRTHDAY).click()
+
+            else:
+                raise ValueError("Invalid tab type")
+
+        # 🔥 No Data check
+    def is_no_data_found(self):
+            return self.birthday_section.locator(
+                DashboardLocators.NO_DATA_FOUND
+            ).first.is_visible()
+
+        # 🔥 Get employee count
+        # 🔥 Employee count
+    def get_employee_count(self):
+            return self.birthday_section.locator(
+                DashboardLocators.EMPLOYEE_CARDS
+            ).count()
+
+        # 🔥 Next button click (safe)
+        # 🔥 Next button
+    def click_next_button(self):
+            next_btn = self.birthday_section.locator(DashboardLocators.NEXT_BUTTON)
+
+            if next_btn.is_visible():
+                next_btn.click()
+            return True
+            return False
+
+        # 🔥 Previous button click (safe)
+        # 🔥 Previous button
+    def click_previous_button(self):
+            prev_btn = self.birthday_section.locator(DashboardLocators.PREVIOUS_BUTTON)
+
+            if prev_btn.is_visible():
+                prev_btn.click()
+            return True
+
+    def is_next_button_visible(self):
+        btn = self.page.locator(DashboardLocators.NEXT_BUTTON)
+        return btn.count() > 0 and btn.first.is_visible()
+
+    def is_prev_button_visible(self):
+        btn = self.page.locator(DashboardLocators.PREVIOUS_BUTTON)
+        return btn.count() > 0 and btn.first.is_visible()
+
+
     # =====================================================
     # COMMON WAIT (IMPORTANT)
     # =====================================================
@@ -119,74 +179,6 @@ class DashboardPage(BasePage):
     def click_dashboard_menu(self):
         self.page.get_by_role("link", name="Dashboard").first.click()
 
-
-# # ==========================================
-# # GENERIC SECTION HANDLER (REUSABLE)
-# # ==========================================
-#     def click_tab(self, locator):
-#         self.page.locator(locator).click()
-#
-#
-#     def get_count_from_tab(self, locator):
-#         text = self.page.locator(locator).inner_text()
-#         return int(''.join(filter(str.isdigit, text))) if any(c.isdigit() for c in text) else 0
-#
-#
-#     def wait_for_section(self, section_locator, cards_locator, no_data_locator):
-#         self.page.wait_for_selector(section_locator, timeout=10000)
-#
-#         try:
-#             self.page.wait_for_selector(cards_locator, timeout=4000)
-#         except:
-#             self.page.wait_for_selector(no_data_locator, timeout=4000)
-#
-#
-#     def is_no_data_visible_generic(self, no_data_locator):
-#         try:
-#             return self.page.locator(no_data_locator).first.is_visible(timeout=2000)
-#         except:
-#             return False
-#
-#
-#     def get_cards_count_generic(self, cards_locator):
-#         cards = self.page.locator(cards_locator)
-#
-#         visible = 0
-#         for i in range(cards.count()):
-#             try:
-#                 if cards.nth(i).is_visible():
-#                     visible += 1
-#             except:
-#                 continue
-#
-#         return visible
-#
-#     def validate_section(self, tab_locator, section_locator, cards_locator, no_data_locator):
-#
-#         # Click tab
-#         self.click_tab(tab_locator)
-#
-#         # Wait
-#         self.wait_for_section(section_locator, cards_locator, no_data_locator)
-#
-#         # Get data
-#         count = self.get_count_from_tab(tab_locator)
-#         no_data = self.is_no_data_visible_generic(no_data_locator)
-#         cards = self.get_cards_count_generic(cards_locator)
-#
-#         print("Count:", count)
-#         print("Cards:", cards)
-#         print("No Data:", no_data)
-#
-#         # FINAL LOGIC
-#         if cards > 0:
-#             return "data"
-#
-#         elif no_data:
-#             return "no_data"
-#
-#         else:
-#             raise Exception("UI not stable")
 
     # =====================================================
     # WFH SECTION
