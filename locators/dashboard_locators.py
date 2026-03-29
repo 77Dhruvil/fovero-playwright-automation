@@ -39,3 +39,26 @@ class DashboardLocators:
 
     # 🔥 FIXED strict mode issue
     DASHBOARD_MENU = "role=link[name='Dashboard']"
+
+    ##### WFH SECTION ######################
+
+    # Section base
+    WFH_SECTION = "//h6[text()='WFH']/ancestor::div[contains(@class,'card')]"
+
+    # Cards
+    WFH_CARDS = "//h6[text()='WFH']/ancestor::div[contains(@class,'card')]//div[@role='button']"
+
+    WFH_TODAY_TAB = "//button[contains(@id,'WFH') and contains(text(),'Today')]"
+    WFH_UPCOMING_TAB = "//button[contains(@id,'WFH') and contains(text(),'Upcoming')]"
+
+    # Inside card
+    WFH_EMPLOYEE_NAME = "xpath=.//strong[contains(@class,'fs-13')]"
+    WFH_TYPE = "xpath=.//span[contains(@class,'fs-13')]"
+    WFH_STATUS = "xpath=.//div[contains(text(),'Approved') or contains(text(),'Not Approved')]"
+
+    # No Data
+    WFH_NO_DATA = "//h6[text()='WFH']/ancestor::div//img[contains(@src,'no-data-found')]"
+
+    #Back Button
+    WFH_DETAIL_BACK_BUTTON = "a.back-arrow-btn[href='/wfh/']"
+
