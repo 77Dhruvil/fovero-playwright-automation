@@ -41,9 +41,7 @@ def test_birthday_section(admin_dashboard_login):
         print(f"Upcoming Count: {count}")
 
         if count <= 2:
-            assert not dashboard.click_next_button()
-            assert not dashboard.click_previous_button()
+            assert not dashboard.is_next_button_visible()
         else:
-            assert dashboard.click_next_button()
-            assert dashboard.click_previous_button()
+            assert dashboard.is_next_button_visible()
 

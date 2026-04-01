@@ -250,3 +250,56 @@ class DashboardPage(BasePage):
 
     def is_wfh_upcoming_active(self):
         return "active" in self.page.locator(DashboardLocators.WFH_UPCOMING_TAB).get_attribute("class")
+
+    def close_modal_if_open(self):
+        modal = self.page.locator("div[role='dialog']")
+
+        if modal.count() > 0 and modal.is_visible():
+
+            # 🔹 Try clicking close button
+            close_btn = self.page.locator("button[aria-label='Close'], .btn-close")
+
+            if close_btn.count() > 0 and close_btn.is_visible():
+                close_btn.click()
+
+            else:
+                # 🔹 Fallback: click top-right area (sometimes no proper button)
+                self.page.mouse.click(1900, 100)  # adjust if needed
+
+            # 🔹 Wait for modal to disappear (safe wait)
+            self.page.wait_for_selector("div[role='dialog']", state="hidden", timeout=10000)
+
+# -------- TAB CLICK --------
+    def click_tab(self, tab_name):
+        self.close_modal_if_open()
+
+        if tab_name == "in":
+            self.page.locator("#present").click()
+        elif tab_name == "out":
+            self.page.locator("#absent").click()
+        elif tab_name == "yet":
+            self.page.locator("#yetToCheckin").click()
+
+        # ✅ WAIT for table refresh (VERY IMPORTANT)
+        self.page.wait_for_timeout(1000)
+        # -------- GET EMPLOYEES --------
+
+    def get_employee_names(self):
+        if self.is_no_data_found():
+            return []
+
+        table = self.page.locator("div[role='table']")
+
+        rows = table.locator("div[role='row']").filter(
+            has_not=self.page.locator("[role='columnheader']")
+        )
+
+        names = []
+        for i in range(rows.count()):
+            name = rows.nth(i).locator("div[data-column-id='2']").inner_text().strip()
+
+            if name and name.lower() != "name":  # ✅ avoid header issue
+                names.append(name)
+
+        return names
+
