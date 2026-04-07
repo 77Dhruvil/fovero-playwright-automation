@@ -13,3 +13,11 @@ class SettingsLocators:
     # 💾 Save Button
     SAVE_BUTTON = "button:has-text('Save week-off')"
 
+
+    OFFICE_START_TIME = "#office_timing_start_time"
+    OFFICE_END_TIME = "#office_timing_end_time"
+
+    BREAK1_START_TIME = "#first_break_timing_start_time"
+    BREAK1_END_TIME = "#first_break_timing_end_time"
+
+    SAVEE_BUTTON = "button:has-text('Save')"

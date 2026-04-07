@@ -17,3 +17,6 @@ class BasePage:
 
     def get_text(self, locator):
         return self.page.locator(locator).inner_text()
+
+    def wait(self, selector):
+        self.page.locator(selector).wait_for(state="visible")

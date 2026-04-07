@@ -10,6 +10,14 @@ def test_live_attendance_logic(admin_dashboard_login):
     # STEP 1 - YET
     dashboard.click_tab("yet")
 
+    yet_names = dashboard.get_employee_names()
+
+    if not yet_names:
+        print("✅ No Yet-to-checkin data")
+    else:
+        print(f"👉 Yet Count: {len(yet_names)}")
+        print(f"👉 Yet Names: {yet_names}")
+
     if dashboard.is_no_data_found():
         print("✅ No Yet-to-checkin data")
         yet_names = []

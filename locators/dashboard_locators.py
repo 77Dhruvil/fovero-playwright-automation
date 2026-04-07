@@ -80,3 +80,20 @@ class DashboardLocators:
     TABLE = "div[role='table']"
     NO_DATA = "text='There are no records to display'"
 
+
+# Main section
+    MONTHLY_SECTION = "h6:has-text('Monthly Work Timing Insights')"
+
+    # Cards (generic - dynamic)
+    CARDS = "//h6[text()='Monthly Work Timing Insights']/ancestor::div[contains(@class,'card')]"
+    # Individual metrics
+    STARTING_DAY = "text=Starting Day"
+    ENDING_DAY = "text=Ending Day"
+    BREAK_TIME = "text=Break Time"
+    WORKING_TIME = "text=Working Time"
+
+    # Avg values
+    AVG_START = "text=Avg Start Time"
+    AVG_END = "text=Avg End Time"
+    AVG_BREAK = "text=Avg Break Time"
+    AVG_WORK = "text=Avg Working Time"
