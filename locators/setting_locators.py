@@ -12,4 +12,3 @@ class SettingsLocators:
 
     # 💾 Save Button
     SAVE_BUTTON = "button:has-text('Save week-off')"
-

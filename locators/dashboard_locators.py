@@ -45,11 +45,8 @@ class DashboardLocators:
 
     ##### WFH SECTION ######################
 
-    # Section base
-    WFH_SECTION = "//h6[text()='WFH']/ancestor::div[contains(@class,'card')]"
-
-    # Cards
-    WFH_CARDS = "//h6[text()='WFH']/ancestor::div[contains(@class,'card')]//div[@role='button']"
+    WFH_UPCOMING_SECTION = "//div[contains(@id,'upcoming') or contains(@class,'upcoming')]"
+    WFH_UPCOMING_CARDS = "//div[contains(@id,'upcoming')]//div[@role='button']"
 
     WFH_TODAY_TAB = "//button[contains(@id,'WFH') and contains(text(),'Today')]"
     WFH_UPCOMING_TAB = "//button[contains(@id,'WFH') and contains(text(),'Upcoming')]"
@@ -79,4 +76,3 @@ class DashboardLocators:
     ALL_ROWS = "div[role='row']"
     TABLE = "div[role='table']"
     NO_DATA = "text='There are no records to display'"
-

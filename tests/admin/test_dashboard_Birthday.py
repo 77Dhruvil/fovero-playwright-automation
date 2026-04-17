@@ -44,4 +44,3 @@ def test_birthday_section(admin_dashboard_login):
             assert not dashboard.is_next_button_visible()
         else:
             assert dashboard.is_next_button_visible()
-
