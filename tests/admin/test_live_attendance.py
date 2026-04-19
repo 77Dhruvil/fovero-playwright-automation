@@ -8,22 +8,22 @@ def test_live_attendance_logic(admin_dashboard_login):
 
     # ================= YET =================
     # YET
-    dashboard.click_tab("yet")
-    yet_count, yet_names = dashboard.get_attendance_data()
+    dashboard.live_attendance.click_tab("yet")
+    yet_count, yet_names = dashboard.live_attendance.get_attendance_data()
 
     print(f"👉 Yet Count: {yet_count}")
     print(f"👉 Yet Names: {yet_names}")
 
     # IN
-    dashboard.click_tab("in")
-    in_count, in_names = dashboard.get_attendance_data()
+    dashboard.live_attendance.click_tab("in")
+    in_count, in_names = dashboard.live_attendance.get_attendance_data()
 
     print(f"👉 IN Count: {in_count}")
     print(f"👉 IN Names: {in_names}")
 
     # OUT
-    dashboard.click_tab("out")
-    out_count, out_names = dashboard.get_attendance_data()
+    dashboard.live_attendance.click_tab("out")
+    out_count, out_names = dashboard.live_attendance.get_attendance_data()
 
     print(f"👉 OUT Count: {out_count}")
     print(f"👉 OUT Names: {out_names}")
@@ -39,7 +39,7 @@ def test_live_attendance_logic(admin_dashboard_login):
     print("✅ Validation Passed")
 
     # ================= SETTINGS =================
-    dashboard.close_modal_if_open()
+    dashboard.live_attendance.close_modal_if_open()
     settings.go_to_settings()
 
     print("========== TEST COMPLETED ==========\n")

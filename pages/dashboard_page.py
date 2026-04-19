@@ -1,11 +1,15 @@
 from pages.base_page import BasePage
-from locators.dashboard_locators import DashboardLocators
+from pages.birthday_page import BirthdayPage
+from pages.leave_page import LeavePage
+from pages.wfh_page import WFHPage
+from pages.live_attendance_page import LiveAttendancePage
 
 
 class DashboardPage(BasePage):
 
     def __init__(self, page):
         super().__init__(page)
+<<<<<<< HEAD
         self.birthday_section = page.locator(DashboardLocators.BIRTHDAY_SECTION)
 
     # =====================================================
@@ -245,3 +249,13 @@ class DashboardPage(BasePage):
             menu.click()
 
         self.page.wait_for_load_state("domcontentloaded")
+=======
+
+        self.birthday = BirthdayPage(page)
+        self.leave = LeavePage(page)
+        self.wfh = WFHPage(page)
+        self.live_attendance = LiveAttendancePage(page)
+
+    def click_dashboard_menu(self):
+        self.page.get_by_role("link", name="Dashboard").first.click()
+>>>>>>> 37672f3 (Created Functionality wise different files and all files dynamic code logic implemented changes done)

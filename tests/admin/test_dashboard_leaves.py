@@ -12,8 +12,9 @@ def test_leaves_complete_validation(admin_dashboard_login):
     # =====================================================
     # 🔵 TODAY TAB
     # =====================================================
-    dashboard.click_today_leaves()
+    dashboard.leave.click_today_leaves()
 
+<<<<<<< HEAD
     assert dashboard.is_today_tab_active()
 
     today_count = dashboard.get_today_leaves_count()
@@ -21,6 +22,15 @@ def test_leaves_complete_validation(admin_dashboard_login):
 
     no_data = dashboard.is_leaves_no_data_visible()
     cards_count = dashboard.get_leave_cards_count()
+=======
+    today_count = dashboard.leave.get_today_leaves_count()
+    print("Today Count:", today_count)
+
+    assert dashboard.leave.is_today_tab_active()
+
+    no_data = dashboard.leave.is_leaves_no_data_visible()
+    cards_count = dashboard.leave.get_leave_cards_count()
+>>>>>>> 37672f3 (Created Functionality wise different files and all files dynamic code logic implemented changes done)
 
     print("Today No Data:", no_data)
     print("Today Cards:", cards_count)
@@ -28,7 +38,7 @@ def test_leaves_complete_validation(admin_dashboard_login):
     # ✅ VALIDATION
     if cards_count > 0:
         for i in range(cards_count):
-            data = dashboard.get_leave_card_data(i)
+            data = dashboard.leave.get_leave_card_data(i)
 
             print(f"Today Card {i}:", data)
 
@@ -43,7 +53,7 @@ def test_leaves_complete_validation(admin_dashboard_login):
         # Navigation check
         current_url = dashboard.page.url
 
-        dashboard.click_leave_card(0)
+        dashboard.leave.click_leave_card(0)
         dashboard.page.wait_for_load_state("load")
 
         assert current_url != dashboard.page.url
@@ -60,8 +70,9 @@ def test_leaves_complete_validation(admin_dashboard_login):
     # =====================================================
     # 🟢 UPCOMING TAB
     # =====================================================
-    dashboard.click_upcoming_leaves()
+    dashboard.leave.click_upcoming_leaves()
 
+<<<<<<< HEAD
     assert dashboard.is_upcoming_tab_active()
 
     upcoming_count = dashboard.get_upcoming_leaves_count()
@@ -69,6 +80,15 @@ def test_leaves_complete_validation(admin_dashboard_login):
 
     no_data = dashboard.is_leaves_no_data_visible()
     cards_count = dashboard.get_leave_cards_count()
+=======
+    upcoming_count = dashboard.leave.get_upcoming_leaves_count()
+    print("Upcoming Count:", upcoming_count)
+
+    assert dashboard.leave.is_upcoming_tab_active()
+
+    no_data = dashboard.leave.is_leaves_no_data_visible()
+    cards_count = dashboard.leave.get_leave_cards_count()
+>>>>>>> 37672f3 (Created Functionality wise different files and all files dynamic code logic implemented changes done)
 
     print("Upcoming No Data:", no_data)
     print("Upcoming Cards:", cards_count)
@@ -76,7 +96,7 @@ def test_leaves_complete_validation(admin_dashboard_login):
     # ✅ FINAL VALIDATION (FIXED)
     if cards_count > 0:
         for i in range(cards_count):
-            data = dashboard.get_leave_card_data(i)
+            data = dashboard.leave.get_leave_card_data(i)
 
             print(f"Upcoming Card {i}:", data)
 
