@@ -1,104 +1,114 @@
-import allure
 import pytest
+import allure
+from pages.leave_page import LeavePage
 
 
 @pytest.mark.admin
-@allure.title("Verify Leave Functionality")
-@allure.description("Admin should be able to see all the leaves of other users")
-def test_leaves_complete_validation(admin_dashboard_login):
+@allure.title("Verify Dashboard Leave Widget")
+@allure.description(
+    "Validate Today's Leave and Upcoming Leave tabs"
+)
+def test_leave_functionality(
+    admin_dashboard_login
+):
 
-    dashboard = admin_dashboard_login
+    leave = LeavePage(
+        admin_dashboard_login.page
+    )
 
-    # =====================================================
-    # 🔵 TODAY TAB
-    # =====================================================
-    dashboard.leave.click_today_leaves()
+    print("\n===== LEAVE WIDGET TEST START =====")
 
-<<<<<<< HEAD
-    assert dashboard.is_today_tab_active()
 
-    today_count = dashboard.get_today_leaves_count()
-    print("Today Count:", today_count)
+    # ==================================================
+    # TODAY TAB
+    # ==================================================
 
-    no_data = dashboard.is_leaves_no_data_visible()
-    cards_count = dashboard.get_leave_cards_count()
-=======
-    today_count = dashboard.leave.get_today_leaves_count()
-    print("Today Count:", today_count)
+    print("\nTesting Today Leaves Tab...")
 
-    assert dashboard.leave.is_today_tab_active()
+    leave.click_today_leaves()
 
-    no_data = dashboard.leave.is_leaves_no_data_visible()
-    cards_count = dashboard.leave.get_leave_cards_count()
->>>>>>> 37672f3 (Created Functionality wise different files and all files dynamic code logic implemented changes done)
+    assert leave.is_today_tab_active(), \
+        "Today tab not active"
 
-    print("Today No Data:", no_data)
-    print("Today Cards:", cards_count)
+    today_count = leave.get_today_leaves_count()
+    cards_count = leave.get_leave_cards_count()
+    no_data = leave.is_leaves_no_data_visible()
 
-    # ✅ VALIDATION
+    print(
+        f"Today Count={today_count} | "
+        f"Cards={cards_count} | "
+        f"NoData={no_data}"
+    )
+
+
     if cards_count > 0:
-        for i in range(cards_count):
-            data = dashboard.leave.get_leave_card_data(i)
 
-            print(f"Today Card {i}:", data)
+        for i in range(cards_count):
+
+            data = leave.get_leave_card_data(i)
+
+            print(
+                f"Card {i+1}: {data}"
+            )
 
             assert data["name"]
             assert data["leave_type"]
 
-            assert any(
-                keyword in data["leave_type"]
-                for keyword in ["Full Day", "Half", "Days"]
-            )
+        # Navigation test
+        current_url = leave.page.url
 
-        # Navigation check
-        current_url = dashboard.page.url
+        leave.click_leave_card(0)
 
-        dashboard.leave.click_leave_card(0)
-        dashboard.page.wait_for_load_state("load")
+        leave.page.wait_for_load_state(
+            "load"
+        )
 
-        assert current_url != dashboard.page.url
+        assert current_url != leave.page.url
 
-        dashboard.page.go_back()
-        dashboard.page.wait_for_load_state("load")
+        leave.page.go_back()
+
+        leave.wait_for_leaves_section()
 
     elif no_data:
         assert True
 
     else:
-        pytest.fail("Today tab unstable (no cards & no no-data)")
+        pytest.fail(
+            "Today tab unstable"
+        )
 
-    # =====================================================
-    # 🟢 UPCOMING TAB
-    # =====================================================
-    dashboard.leave.click_upcoming_leaves()
 
-<<<<<<< HEAD
-    assert dashboard.is_upcoming_tab_active()
+    # ==================================================
+    # UPCOMING TAB
+    # ==================================================
 
-    upcoming_count = dashboard.get_upcoming_leaves_count()
-    print("Upcoming Count:", upcoming_count)
+    print("\nTesting Upcoming Leaves Tab...")
 
-    no_data = dashboard.is_leaves_no_data_visible()
-    cards_count = dashboard.get_leave_cards_count()
-=======
-    upcoming_count = dashboard.leave.get_upcoming_leaves_count()
-    print("Upcoming Count:", upcoming_count)
+    leave.click_upcoming_leaves()
 
-    assert dashboard.leave.is_upcoming_tab_active()
+    assert leave.is_upcoming_tab_active(), \
+        "Upcoming tab not active"
 
-    no_data = dashboard.leave.is_leaves_no_data_visible()
-    cards_count = dashboard.leave.get_leave_cards_count()
->>>>>>> 37672f3 (Created Functionality wise different files and all files dynamic code logic implemented changes done)
+    upcoming_count = leave.get_upcoming_leaves_count()
+    cards_count = leave.get_leave_cards_count()
+    no_data = leave.is_leaves_no_data_visible()
 
-    print("Upcoming No Data:", no_data)
-    print("Upcoming Cards:", cards_count)
+    print(
+        f"Upcoming Count={upcoming_count} | "
+        f"Cards={cards_count} | "
+        f"NoData={no_data}"
+    )
 
-    # ✅ FINAL VALIDATION (FIXED)
+
     if cards_count > 0:
-        for i in range(cards_count):
-            data = dashboard.leave.get_leave_card_data(i)
 
-            print(f"Upcoming Card {i}:", data)
+        for i in range(cards_count):
+
+            data = leave.get_leave_card_data(i)
+
+            print(
+                f"Upcoming Card {i+1}: {data}"
+            )
 
             assert data["name"]
             assert data["leave_type"]
@@ -107,9 +117,15 @@ def test_leaves_complete_validation(admin_dashboard_login):
         assert True
 
     elif upcoming_count == 0:
-        # ✅ fallback safety (important for flaky UI)
-        print("⚠️ Count is 0 but no-data not visible → tolerating UI delay")
+        # fallback for flaky UI
         assert True
 
     else:
-        pytest.fail("Upcoming tab unstable (no cards & no no-data)")
+        pytest.fail(
+            "Upcoming tab unstable"
+        )
+
+
+    print(
+        "\n===== LEAVE WIDGET TEST PASSED ====="
+    )

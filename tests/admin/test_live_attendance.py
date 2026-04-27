@@ -1,45 +1,58 @@
 from pages.setting_page import SettingsPage
+from pages.live_attendance_page import LiveAttendancePage
+
 
 def test_live_attendance_logic(admin_dashboard_login):
+
     dashboard = admin_dashboard_login
     settings = SettingsPage(dashboard.page)
 
+    # Create page object directly
+    live_attendance = LiveAttendancePage(
+        dashboard.page
+    )
+
     print("\n========== LIVE ATTENDANCE TEST START ==========")
 
-    # ================= YET =================
     # YET
-    dashboard.live_attendance.click_tab("yet")
-    yet_count, yet_names = dashboard.live_attendance.get_attendance_data()
+    live_attendance.click_tab("yet")
+    yet_count, yet_names = live_attendance.get_attendance_data()
 
-    print(f"👉 Yet Count: {yet_count}")
-    print(f"👉 Yet Names: {yet_names}")
+    print("Yet Count:", yet_count)
+    print("Yet Names:", yet_names)
+
 
     # IN
-    dashboard.live_attendance.click_tab("in")
-    in_count, in_names = dashboard.live_attendance.get_attendance_data()
+    live_attendance.click_tab("in")
+    in_count, in_names = live_attendance.get_attendance_data()
 
-    print(f"👉 IN Count: {in_count}")
-    print(f"👉 IN Names: {in_names}")
+    print("IN Count:", in_count)
+    print("IN Names:", in_names)
+
 
     # OUT
-    dashboard.live_attendance.click_tab("out")
-    out_count, out_names = dashboard.live_attendance.get_attendance_data()
+    live_attendance.click_tab("out")
+    out_count, out_names = live_attendance.get_attendance_data()
 
-    print(f"👉 OUT Count: {out_count}")
-    print(f"👉 OUT Names: {out_names}")
-    # ================= VALIDATION =================
-    print("\n🔍 Validating IN/OUT not in YET...")
+    print("OUT Count:", out_count)
+    print("OUT Names:", out_names)
 
+
+    # Validation
     for name in in_names:
-        assert name not in yet_names, f"❌ {name} in Yet & IN"
+        assert name not in yet_names, (
+            f"{name} exists in Yet and IN"
+        )
 
     for name in out_names:
-        assert name not in yet_names, f"❌ {name} in Yet & OUT"
+        assert name not in yet_names, (
+            f"{name} exists in Yet and OUT"
+        )
 
-    print("✅ Validation Passed")
+    print("Validation Passed")
 
-    # ================= SETTINGS =================
-    dashboard.live_attendance.close_modal_if_open()
+    live_attendance.close_modal_if_open()
+
     settings.go_to_settings()
 
-    print("========== TEST COMPLETED ==========\n")
+    print("========== TEST COMPLETED ==========")

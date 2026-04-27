@@ -1,264 +1,150 @@
-<<<<<<< HEAD
-=======
-
-import allure
->>>>>>> 37672f3 (Created Functionality wise different files and all files dynamic code logic implemented changes done)
 import pytest
 import allure
 
+from pages.wfh_page import WFHPage
+
 
 @pytest.mark.admin
-<<<<<<< HEAD
-@allure.title("Verify WFH Functionality")
-def test_wfh_complete_validation(admin_dashboard_login):
-=======
-@allure.title("WFH Section - Comprehensive Functionality Test")
-@allure.description("Complete test of all WFH section features with condition-wise logic")
-def test_wfh_comprehensive_validation(admin_dashboard_login):
->>>>>>> 37672f3 (Created Functionality wise different files and all files dynamic code logic implemented changes done)
+@allure.title("WFH Section Comprehensive Functionality Test")
+@allure.description(
+    "Validate Today and Upcoming WFH tabs, cards, no-data and navigation"
+)
+def test_wfh_functionality(
+    admin_dashboard_login
+):
 
-    dashboard = admin_dashboard_login
-    page = dashboard.page
+    wfh = WFHPage(
+        admin_dashboard_login.page
+    )
 
-    print("\n" + "="*100)
-    print(" WFH SECTION - COMPREHENSIVE FUNCTIONALITY TEST")
-    print("="*100)
+    print("\n" + "=" * 80)
+    print("WFH COMPREHENSIVE TEST START")
+    print("=" * 80)
 
-    # =====================================================
-    # SECTION 1: TODAY TAB
-    # =====================================================
-<<<<<<< HEAD
+    # ====================================================
+    # TODAY TAB
+    # ====================================================
 
-    dashboard.click_wfh_today_tab()
-    dashboard.wait_for_wfh_section()
-=======
-    print("\n" + "-"*100)
-    print("[SECTION 1] TODAY WFH TAB")
-    print("-"*100)
->>>>>>> 37672f3 (Created Functionality wise different files and all files dynamic code logic implemented changes done)
+    print("\n[STEP] Open Today WFH tab")
+    wfh.click_wfh_today_tab()
+    wfh.wait_for_wfh_section()
 
-    print("\n[→] Clicking Today tab...")
-    dashboard.wfh.click_wfh_today_tab()
-    print("[✓] Today tab clicked")
+    assert wfh.is_wfh_today_active(), \
+        "Today WFH tab not active"
 
-<<<<<<< HEAD
-    today_cards = dashboard.get_wfh_cards_count()
-    no_data = dashboard.is_wfh_no_data_visible()
+    today_cards = wfh.get_wfh_cards_count()
+    no_data = wfh.is_wfh_no_data_visible()
 
-    print("\nWFH Today Cards:", today_cards)
-    print("WFH Today No Data:", no_data)
+    print(f"Today Cards: {today_cards}")
+    print(f"No Data Visible: {no_data}")
 
     if today_cards > 0:
 
         for i in range(today_cards):
-            data = dashboard.get_wfh_card_data(i)
-            print(f"Today Card {i}:", data)
 
-            assert data["name"]
-            assert data["type"]
-            assert any(x in data["type"] for x in ["Full Day", "Half"])
+            data = wfh.get_wfh_card_data(i)
 
-        # navigation
-        current_url = dashboard.page.url
+            print(f"Card {i}: {data}")
 
-        dashboard.click_wfh_card(0)
-        dashboard.page.wait_for_load_state("load")
+            assert data["name"], "Employee name missing"
+            assert data["type"], "WFH type missing"
 
-        assert dashboard.page.url != current_url
+            assert any(
+                x in data["type"]
+                for x in ["Full Day", "Half"]
+            )
 
-        if dashboard.page.locator("a.back-arrow-btn").count() > 0:
-            dashboard.page.locator("a.back-arrow-btn").click()
-        else:
-            dashboard.page.go_back()
+        # -----------------------------
+        # Card Navigation Validation
+        # -----------------------------
+        print("\n[STEP] Validate card click navigation")
 
-        dashboard.page.wait_for_load_state("load")
+        current_url = page.url
+
+        if wfh.click_wfh_card(0):
+
+            page.wait_for_timeout(1000)
+
+            new_url = page.url
+
+            assert current_url != new_url, \
+                "Card click did not navigate"
+
+            print("Navigation success")
+
+            if wfh.go_back_to_dashboard():
+                page.wait_for_timeout(1000)
 
     elif no_data:
-        assert True
+
+        print("No WFH records for today")
+
     else:
-        pytest.fail("WFH Today tab unstable (no cards & no no-data)")
 
-=======
-    print("\n[✓] Verifying Today tab is active...")
-    assert dashboard.wfh.is_wfh_today_active(), "Today tab not active"
-    print("[✓] Today tab is active")
+        pytest.fail(
+            "Today tab unstable (no cards and no no-data)"
+        )
 
-    print("\n[✓] Getting WFH status...")
-    today_status = dashboard.wfh.get_wfh_status()
-    print(f"    - Cards count: {today_status['cards_count']}")
-    print(f"    - No data visible: {today_status['has_no_data']}")
-    print(f"    - Today active: {today_status['today_active']}")
+    # ====================================================
+    # UPCOMING TAB
+    # ====================================================
 
-    # =====================================================
-    # CONDITION 1A: TODAY - IF DATA FOUND
-    # =====================================================
-    if today_status['cards_count'] > 0:
-        print(f"\n[✓] Found {today_status['cards_count']} WFH card(s) today")
-        
-        # Verify each card
-        print("\n[CARD VERIFICATION]")
-        for i in range(today_status['cards_count']):
-            data = dashboard.wfh.get_wfh_card_data(i)
-            print(f"\n  [CARD {i}]")
-            print(f"    - Name: {data['name']}")
-            print(f"    - Type: {data['type']}")
-            print(f"    - Status: {data['status']}")
-            
-            # Verify required fields
-            assert data["name"] != "", f"Card {i}: Name is empty"
-            assert data["type"] != "", f"Card {i}: Type is empty"
-            print(f"  [✓] Card {i} data valid")
+    print("\n[STEP] Open Upcoming WFH tab")
 
-        # Test card click and navigation
-        print(f"\n[CARD NAVIGATION TEST]")
-        print(f"[→] Clicking first card...")
-        
-        current_url = page.url
-        print(f"    Current URL: {current_url}")
-        
-        if dashboard.wfh.click_wfh_card(0):
-            print(f"[✓] Card clicked, page loaded")
-            
-            page.wait_for_timeout(500)
-            new_url = page.url
-            print(f"    New URL: {new_url}")
-            
-            # Verify URL changed (navigated to detail page)
-            if current_url != new_url:
-                print(f"[✓] URL changed - navigated to detail page")
-            else:
-                print(f"[⚠] URL didn't change")
-            
-            # Navigate back
-            print(f"\n[→] Navigating back to dashboard...")
-            if dashboard.wfh.go_back_to_dashboard():
-                print(f"[✓] Successfully navigated back")
-                page.wait_for_timeout(500)
-            else:
-                print(f"[⚠] Back navigation attempted")
-            
-            # Click Dashboard menu to ensure we're on dashboard
-            print(f"\n[→] Clicking Dashboard menu to ensure we're on dashboard...")
-            try:
-                dashboard.click_dashboard_menu()
-                page.wait_for_timeout(1000)
-                print(f"[✓] Dashboard menu clicked")
-            except Exception as e:
-                print(f"[⚠] Dashboard menu click: {str(e)[:60]}")
-        else:
-            print(f"[⚠] Card click may have failed")
->>>>>>> 37672f3 (Created Functionality wise different files and all files dynamic code logic implemented changes done)
+    wfh.click_wfh_upcoming_tab()
+    wfh.wait_for_wfh_section()
 
-    # =====================================================
-    # CONDITION 1B: TODAY - IF NO DATA
-    # =====================================================
-    elif today_status['has_no_data']:
-        print(f"\n[ℹ] No WFH data for today - No data message shown")
-        print(f"[✓] Today tab verified - no data scenario")
-    
-    # =====================================================
-    # CONDITION 1C: TODAY - ERROR STATE
-    # =====================================================
-<<<<<<< HEAD
-    dashboard.click_dashboard_menu()
-    dashboard.click_wfh_upcoming_tab()
-    dashboard.wait_for_wfh_section()
+    assert wfh.is_wfh_upcoming_active(), \
+        "Upcoming WFH tab not active"
 
-    assert dashboard.is_wfh_upcoming_active()
+    upcoming_cards = wfh.get_wfh_cards_count()
+    no_data = wfh.is_wfh_no_data_visible()
 
-    upcoming_cards = dashboard.get_wfh_cards_count()
-    no_data = dashboard.is_wfh_no_data_visible()
-
-    print("\nWFH Upcoming Cards:", upcoming_cards)
-    print("WFH Upcoming No Data:", no_data)
+    print(f"Upcoming Cards: {upcoming_cards}")
+    print(f"No Data Visible: {no_data}")
 
     if upcoming_cards > 0:
 
         for i in range(upcoming_cards):
-            data = dashboard.get_wfh_card_data(i)
 
-            print(f"Upcoming Card {i}:", data)
+            data = wfh.get_wfh_card_data(i)
 
-            assert data["name"]
-            assert data["type"]
-            assert any(x in data["type"] for x in ["Full Day", "Half"])
+            print(f"Upcoming Card {i}: {data}")
+
+            assert data["name"], \
+                "Employee name missing"
+
+            assert data["type"], \
+                "WFH type missing"
+
+            assert any(
+                x in data["type"]
+                for x in ["Full Day", "Half"]
+            )
 
     elif no_data:
-        assert True
+
+        print("No upcoming WFH records")
+
     else:
-        pytest.fail("WFH Upcoming unstable")
-=======
-    else:
-        print(f"\n[⚠] Today tab: UI state unclear (no cards & no no-data message)")
-        print(f"[ℹ] Continuing with test...")
 
-    # =====================================================
-    # SECTION 2: UPCOMING TAB
-    # =====================================================
-    print("\n" + "-"*100)
-    print("[SECTION 2] UPCOMING WFH TAB")
-    print("-"*100)
+        pytest.fail(
+            "Upcoming tab unstable (no cards and no no-data)"
+        )
 
-    print("\n[→] Clicking Upcoming tab...")
-    dashboard.wfh.click_wfh_upcoming_tab()
-    print("[✓] Upcoming tab clicked")
+    # ====================================================
+    # STATUS VALIDATION
+    # ====================================================
 
-    print("\n[✓] Verifying Upcoming tab is active...")
-    assert dashboard.wfh.is_wfh_upcoming_active(), "Upcoming tab not active"
-    print("[✓] Upcoming tab is active")
+    print("\n[STEP] Final status validation")
 
-    print("\n[✓] Getting WFH status...")
-    upcoming_status = dashboard.wfh.get_wfh_status()
-    print(f"    - Cards count: {upcoming_status['cards_count']}")
-    print(f"    - No data visible: {upcoming_status['has_no_data']}")
-    print(f"    - Upcoming active: {upcoming_status['upcoming_active']}")
+    status = wfh.get_wfh_status()
 
-    # =====================================================
-    # CONDITION 2A: UPCOMING - IF DATA FOUND
-    # =====================================================
-    if upcoming_status['cards_count'] > 0:
-        print(f"\n[✓] Found {upcoming_status['cards_count']} WFH card(s) upcoming")
-        
-        # Verify each card
-        print("\n[CARD VERIFICATION]")
-        for i in range(upcoming_status['cards_count']):
-            data = dashboard.wfh.get_wfh_card_data(i)
-            print(f"\n  [CARD {i}]")
-            print(f"    - Name: {data['name']}")
-            print(f"    - Type: {data['type']}")
-            print(f"    - Status: {data['status']}")
-            
-            # Verify required fields
-            assert data["name"] != "", f"Card {i}: Name is empty"
-            assert data["type"] != "", f"Card {i}: Type is empty"
-            print(f"  [✓] Card {i} data valid")
+    print(status)
 
-    # =====================================================
-    # CONDITION 2B: UPCOMING - IF NO DATA
-    # =====================================================
-    elif upcoming_status['has_no_data']:
-        print(f"\n[ℹ] No WFH data for upcoming - No data message shown")
-        print(f"[✓] Upcoming tab verified - no data scenario")
-    
-    # =====================================================
-    # CONDITION 2C: UPCOMING - ERROR STATE
-    # =====================================================
-    else:
-        print(f"\n[⚠] Upcoming tab: UI state unclear (no cards & no no-data message)")
-        print(f"[ℹ] Continuing with test...")
+    assert "cards_count" in status
+    assert "has_no_data" in status
 
-    # =====================================================
-    # FINAL SUMMARY
-    # =====================================================
-    print("\n" + "="*100)
-    print(" TEST SUMMARY - ALL CONDITIONS TESTED ✅")
-    print("="*100)
-    print("\nTested Scenarios:")
-    print(f"  ✅ Today Tab: {today_status['cards_count']} cards or no-data")
-    if today_status['cards_count'] > 0:
-        print(f"     - Card navigation: Click -> Detail -> Back")
-    print(f"  ✅ Upcoming Tab: {upcoming_status['cards_count']} cards or no-data")
-    print(f"  ✅ Condition-wise logic applied")
-    print(f"  ✅ No failures on missing data")
-    print("\n" + "="*100 + "\n")
->>>>>>> 37672f3 (Created Functionality wise different files and all files dynamic code logic implemented changes done)
+    print("\n" + "=" * 80)
+    print("WFH TEST PASSED")
+    print("=" * 80)

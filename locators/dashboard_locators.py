@@ -76,3 +76,4 @@ class DashboardLocators:
     ALL_ROWS = "div[role='row']"
     TABLE = "div[role='table']"
     NO_DATA = "text='There are no records to display'"
+
