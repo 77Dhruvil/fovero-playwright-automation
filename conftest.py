@@ -1,8 +1,9 @@
 import pytest
 from playwright.sync_api import sync_playwright
 
-from pages.login_page import LoginPage
 from pages.dashboard_page import DashboardPage
+from pages.login_page import LoginPage
+#from pages.dashboard_page import DashboardPage
 from utils.config import Config
 
 
