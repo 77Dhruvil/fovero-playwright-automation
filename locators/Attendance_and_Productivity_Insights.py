@@ -1,0 +1,17 @@
+class Attendance_and_Productivity_Insights:
+
+    SECTION_HEADER = "//div[contains(@class,'employee-attendance-productivity-insights')]//h6"
+    SECTION_CONTAINER = "//div[contains(@class,'employee-attendance-productivity-insights')]"
+    ARRIVALS_TAB_SCOPED = "// div[contains( @class ,'employee-attendance-productivity-insights')] // strong[normalize-space()='Arrivals']"
+    DEPARTURES_TAB_SCOPED = "// div[contains( @class ,'employee-attendance-productivity-insights')] // strong[normalize-space()='Departures']"
+    BREAKS_TAB_SCOPED = "// div[contains( @class ,'employee-attendance-productivity-insights')] // strong[normalize-space()='Breaks']"
+    PRODUCTIVITY_TAB_SCOPED = "// div[contains( @class ,'employee-attendance-productivity-insights')] // strong[normalize-space()='Productivity']"
+    TOP_5_LATE_ARRIVALS_SCOPED = "// div[contains( @class ,'d-flex') and.// p[normalize-space()='Top 5 Late Arrivals']]"
+    TOP_5_EARLY_ARRIVALS_SCOPED = "// div[contains( @class ,'d-flex') and.// p[normalize-space()='Top 5 Early Arrivals']]"
+    NO_DATA_IMAGE_SCOPED = "(//img[contains(@class,'noDataImg')])[1]"
+    TOP_5_EARLY_DEPARTURES_SCOPED = "// div[contains( @class ,'d-flex') and.// p[normalize-space()='Top 5 Early Departures']]"
+    TOP_5_LATE_DEPARTURES_SCOPED = "// div[contains( @class ,'d-flex') and.// p[normalize-space()='Top 5 Late Departures']]"
+    TOP_5_EXTENDED_BREAK_HOURS_SCOPED = "// div[contains( @class ,'d-flex') and.// p[normalize-space()='Top 5 Extended Break Hours']]"
+    TOP_5_MINIMAL_BREAK_HOURS_SCOPED = "// div[contains( @class ,'d-flex') and.// p[normalize-space()='Top 5 Minimal Break Hours']]"
+    TOP_5_LOW_PRODUCTIVITY_HOURS_SCOPED = "// div[contains( @class ,'d-flex') and.// p[normalize-space()='Top 5 Low Productivity Hours']]"
+    TOP_5_HIGH_PRODUCTIVITY_HOURS_SCOPED = "// div[contains( @class ,'d-flex') and.// p[normalize-space()='Top 5 High Productivity Hours']]"
