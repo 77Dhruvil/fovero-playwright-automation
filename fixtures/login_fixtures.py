@@ -12,4 +12,4 @@ def admin_dashboard(page):
     user = Config.USERS["administrator"]
     login_page.login(user["email"], user["password"])
 
-    return DashboardPage(page)
+    return (page)
