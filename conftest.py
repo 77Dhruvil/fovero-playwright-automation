@@ -1,6 +1,7 @@
 import pytest
 from playwright.sync_api import sync_playwright
 
+from pages.dashboard_page import DashboardPage
 from pages.login_page import LoginPage
 #from pages.dashboard_page import DashboardPage
 from utils.config import Config
@@ -56,4 +57,4 @@ def admin_dashboard_login(page):
     # optional small stabilization wait
     page.wait_for_timeout(2000)
 
-    return (page)
+    return DashboardPage(page)
