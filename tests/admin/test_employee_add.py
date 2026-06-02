@@ -79,13 +79,18 @@ def test_complete_add_employee_flow(admin_dashboard_login):
 
     page.wait_for_timeout(3000)
 
-    if add_employee.is_modal_open():
+    try:
+
+        add_employee.modal.wait_for(
+            state="visible",
+            timeout=10000
+        )
 
         print("[✓] Add Employee modal opened")
 
-    else:
+    except Exception as e:
 
-        pytest.fail("[✗] Add Employee modal not opened")
+        pytest.fail(f"[✗] Add Employee modal not opened: {e}")
 
     # =====================================================
     # VERIFY MODAL TITLE
@@ -114,135 +119,25 @@ def test_complete_add_employee_flow(admin_dashboard_login):
         print(f"[⚠] Modal title check failed: {e}")
 
     # =====================================================
-    # GENERATE TEST DATA
+    # GENERATE & SUBMIT RANDOM EMPLOYEE
     # =====================================================
 
-    print("\n[STEP 4] GENERATE TEST DATA")
+    print("\n[STEP 4] GENERATE & SUBMIT RANDOM EMPLOYEE")
 
-    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+    # Use the helper which resolves dropdowns dynamically and fills the form
+    success, generated_data, details = add_employee.add_random_employee(choose_random_options=True)
 
-    random_text = ''.join(
-        random.choices(
-            string.ascii_lowercase,
-            k=3
-        )
-    )
+    print("[INFO] add_random_employee returned:")
+    print(f" - success: {success}")
+    print(f" - data: {generated_data}")
+    print(f" - details: {details}")
 
-    employee_data = {
+    # Wait a moment for any UI updates
+    page.wait_for_timeout(2000)
 
-        "employee_id": f"EMP{timestamp}",
-
-        "email": f"testemployee{random_text}@example.com",
-
-        "first_name": "Test",
-
-        "last_name": f"User{random_text}",
-
-        "gender": "Male",
-
-        "department": "QA Team",
-
-        "employment_type": "Permanent",
-
-        "invite": False,
-
-        "joining_window": False
-    }
-
-    print(f"[✓] Employee ID: {employee_data['employee_id']}")
-    print(f"[✓] Email: {employee_data['email']}")
-
-    # =====================================================
-    # FILL FORM
-    # =====================================================
-
-    print("\n[STEP 5] FILL ADD EMPLOYEE FORM")
-
-    try:
-
-        form_result = add_employee.fill_add_employee_form(
-            employee_data
-        )
-
-        if form_result:
-
-            print("[✓] Form filled successfully")
-
-        else:
-
-            print("[⚠] Some form fields failed")
-
-    except Exception as e:
-
-        print(f"[✗] Form fill failed: {e}")
-
-    page.wait_for_timeout(3000)
-
-    # =====================================================
-    # VALIDATION ERRORS
-    # =====================================================
-
-    print("\n[STEP 6] CHECK VALIDATION ERRORS")
-
-    try:
-
-        errors = add_employee.get_validation_errors()
-
-        if errors:
-
-            print(f"[⚠] Validation Errors Found: {errors}")
-
-        else:
-
-            print("[✓] No validation errors")
-
-    except Exception as e:
-
-        print(f"[⚠] Validation check failed: {e}")
-
-    # =====================================================
-    # SAVE EMPLOYEE
-    # =====================================================
-
-    print("\n[STEP 7] SAVE EMPLOYEE")
-
-    try:
-
-        if add_employee.save_employee():
-
-            print("[✓] Save button clicked")
-
-        else:
-
-            print("[⚠] Save button click failed")
-
-    except Exception as e:
-
-        print(f"[✗] Save failed: {e}")
-
-    page.wait_for_timeout(5000)
-
-    # =====================================================
-    # SUCCESS MESSAGE
-    # =====================================================
-
-    print("\n[STEP 8] VERIFY SUCCESS MESSAGE")
-
-    try:
-
-        success_message = add_employee.get_success_message()
-
-        if success_message:
-
-            print(f"[✓] Success Message: {success_message}")
-
-        else:
-
-            print("[ℹ] No success message displayed")
-
-    except Exception as e:
-
-        print(f"[⚠] Success message check failed: {e}")
+    # Assert saved
+    if not success:
+        pytest.fail(f"[✗] Failed to add employee dynamically. Details: {details}")
 
     # =====================================================
     # CHECK MODAL STATUS

@@ -48,4 +48,4 @@ def test_attendance_and_productivity_dashboard(admin_dashboard_login):
     # =========================
     # NO DATA CHECK
     # =========================
-    assert isinstance(att.is_no_data_visible(), bool)
+    assert isinstance(att.is_no_data_visible(),bool)

@@ -1,10 +1,3 @@
-"""
-EMPLOYEE LOCATORS
-=====================================================
-FINAL UPDATED LOCATORS FILE
-Based on actual Fovero Employee UI
-"""
-
 class EmployeeLocators:
 
     # =====================================================
@@ -195,6 +188,65 @@ class EmployeeLocators:
     LAST_NAME_INPUT = (
         "input[name='lastName'], "
         "input[placeholder*='Last Name']"
+    )
+
+    # =====================================================
+    # MODAL-SCOPED INPUTS (prefer these when interacting inside Add Employee dialog)
+    # =====================================================
+    MODAL_EMPLOYEE_ID_INPUT = (
+        "div[role='dialog'] input[name='employeeId'], "
+        "div[role='dialog'] input[placeholder*='Employee ID']"
+    )
+
+    MODAL_EMAIL_INPUT = (
+        "div[role='dialog'] input[type='email'], "
+        "div[role='dialog'] input[name='email'], "
+        "div[role='dialog'] input[placeholder*='Email']"
+    )
+
+    MODAL_FIRST_NAME_INPUT = (
+        "div[role='dialog'] input[name='firstName'], "
+        "div[role='dialog'] input[placeholder*='First Name']"
+    )
+
+    MODAL_LAST_NAME_INPUT = (
+        "div[role='dialog'] input[name='lastName'], "
+        "div[role='dialog'] input[placeholder*='Last Name']"
+    )
+
+    MODAL_GENDER_DROPDOWN = (
+        "div[role='dialog'] input[id*='gender'], "
+        "div[role='dialog'] div[aria-label*='Gender']"
+    )
+
+    MODAL_DEPARTMENT_DROPDOWN = (
+        "div[role='dialog'] input[id*='department'], "
+        "div[role='dialog'] div[aria-label*='Department']"
+    )
+
+    MODAL_EMPLOYMENT_TYPE_DROPDOWN = (
+        "div[role='dialog'] input[id*='employment'], "
+        "div[role='dialog'] div[aria-label*='Employment']"
+    )
+
+    MODAL_ROLE_DROPDOWN = (
+        "div[role='dialog'] input[id*='role'], "
+        "div[role='dialog'] div[aria-label*='Role']"
+    )
+
+    MODAL_REPORTING_TO_DROPDOWN = (
+        "div[role='dialog'] input[id*='reporting'], "
+        "div[role='dialog'] div[aria-label*='Reporting']"
+    )
+
+    MODAL_INVITE_CHECKBOX = (
+        "div[role='dialog'] input[type='checkbox'][name='invite'], "
+        "div[role='dialog'] input[type='checkbox']"
+    )
+
+    MODAL_JOINING_WINDOW_CHECKBOX = (
+        "div[role='dialog'] input[type='checkbox'][name='joiningWindow'], "
+        "div[role='dialog'] input[type='checkbox']"
     )
 
     # =====================================================

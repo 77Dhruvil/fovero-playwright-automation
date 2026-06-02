@@ -3,8 +3,8 @@ from locators.Attendance_and_Productivity_Insights import Attendance_and_Product
 
 class AttendanceAndProductivityInsights:
 
-    def __init__(self, page):
-        self.page = page
+    def __init__(self, dashboard_page):
+        self.page = dashboard_page.page
         self.loc = Attendance_and_Productivity_Insights
 
     # =========================

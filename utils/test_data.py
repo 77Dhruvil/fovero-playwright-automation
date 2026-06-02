@@ -60,3 +60,49 @@ class TestData:
         "title": "Test Announcement",
         "description": "This is automated test announcement"
     }
+
+    # -------------------------------
+    # 👨‍💼 EMPLOYEE DATA
+    # -------------------------------
+    EMPLOYEE_GENDERS = [
+        "Male",
+        "Female",
+        "Other"
+    ]
+
+    EMPLOYEE_DEPARTMENTS = [
+        "Other",
+        "Project Management",
+        "PHP",
+        "Mobile Team",
+        "SEO Team",
+        "QA Team"
+    ]
+
+    EMPLOYEE_DESIGNATIONS = [
+        "Software Engineer",
+        "Senior Software Engineer",
+        "Business Analyst",
+        "Technical Lead",
+        "Project Manager",
+        "Quality Analyst",
+        "Junior Quality Analyst",
+        "Administrator",
+        "Web Analyst",
+        "Tech Lead"
+    ]
+
+    EMPLOYEE_EMPLOYMENT_TYPES = [
+        "Full-Time",
+        "Part-Time",
+        "Contract",
+        "Intern"
+    ]
+
+    EMPLOYEE_ROLES = [
+        "Admin",
+        "Employee",
+        "Manager",
+        "HR",
+        "Finance"
+    ]

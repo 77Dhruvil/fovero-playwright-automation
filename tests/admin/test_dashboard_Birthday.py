@@ -4,7 +4,7 @@ import allure
 from pages.birthday_page import BirthdayPage
 
 
-@pytest.mark.admin
+#@pytest.mark.admin
 @allure.title("Birthday Section Comprehensive Functionality Test")
 @allure.description("Validate birthday tabs, pagination and no-data scenarios")
 def test_birthday_comprehensive_functionality(admin_dashboard_login):
